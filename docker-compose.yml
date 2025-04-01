@@ -1,0 +1,60 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: matcha-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - matcha-network
+      
+  backend:
+    build: ./srcs/backend
+    container_name: matcha-backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    networks:
+      - matcha-network
+
+  frontend:
+    build: ./srcs/frontend
+    container_name: matcha-frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./srcs/frontend:/app
+    networks:
+      - matcha-network
+
+  nginx:
+    image: nginx:latest
+    container_name: matcha-nginx
+    depends_on:
+      - frontend
+      - backend
+    volumes:
+      - ./srcs/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    networks:
+      - matcha-network
+
+networks:
+  matcha-network:
+
+volumes:
+  postgres_data:
