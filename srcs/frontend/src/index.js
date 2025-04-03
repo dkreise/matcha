@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Layout from "./pages/Layout";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from './pages/SignUp';
 import NoPage from "./pages/NoPage";
-import { createContext, useContext, useState, useEffect } from 'react';
+// import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:5000';

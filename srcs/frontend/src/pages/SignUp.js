@@ -1,6 +1,15 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import { handleSignUp } from "../services/signUp";
 import InputField from "../components/InputField";
+
+const LoginLink = () => {
+    return (
+        <p>
+            Already have an account? <Link to="/login">Login here</Link>
+        </p>
+    );
+};
 
 const SignUp = () => {
     const [username, setUsername] = useState("");
@@ -43,6 +52,7 @@ const SignUp = () => {
                 />
                 <button type="submit">Sign Up</button>
             </form>
+            <LoginLink />
         </div>
     );
 };

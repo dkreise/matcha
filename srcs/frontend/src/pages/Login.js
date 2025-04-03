@@ -1,6 +1,15 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import { handleLogin } from "../services/login";
 import InputField from "../components/InputField";
+
+const SignUpLink = () => {
+    return (
+        <p>
+            Don't have an account? <Link to="/signup">Register here</Link>
+        </p>
+    );
+};
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -29,6 +38,7 @@ const Login = () => {
                 />
                 <button type="submit">Login</button>
             </form>
+            <SignUpLink />
         </div>
     );
 };
