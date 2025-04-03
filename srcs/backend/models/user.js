@@ -2,12 +2,18 @@ const pool = require("../db/index");
 const bcrypt = require('bcrypt');
 
 const User = {
-  async createUser(username, email, passwordHash) {
+  async createUser(username, first_name, email, password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [username, email, passwordHash]
+      "INSERT INTO users (username, first_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
+      [username,first_name, email, hashedPassword]
     );
     return result.rows[0];
+  },
+
+  async getUsers() {
+    const result = await pool.query("SELECT * FROM users");
+    return result.rows;
   },
 
   async getUserById(id) {

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import SignUp from './pages/SignUp';
 import NoPage from "./pages/NoPage";
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
@@ -20,6 +21,7 @@ const App = () => (
         <BrowserRouter>
             <Routes>
                 <Route path='/login' element={<Login />} />
+                <Route path='/signup' element={<SignUp />} />
                 {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} /> */}
                 <Route path='/' element={<Home />} />
                 <Route path="*" element={<NoPage />} />
