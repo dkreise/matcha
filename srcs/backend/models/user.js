@@ -1,4 +1,5 @@
 const pool = require("../db/index");
+const bcrypt = require('bcrypt');
 
 const User = {
   async createUser(username, email, passwordHash) {
@@ -13,6 +14,14 @@ const User = {
     const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
     return result.rows[0];
   },
+
+  async getUserByUsername(username) {
+    const result = await pool.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username]
+    );
+    return result.rows[0];
+  },
   
   async updateUser(id, newUsername) {
     const result = await pool.query(
@@ -20,7 +29,21 @@ const User = {
       [newUsername, id]
     );
     return result.rows[0];
-  }
+  },
+
+  async deleteUser(id) {
+    const result = await pool.query(
+      "DELETE FROM users WHERE id = $1 RETURNING *",
+      [id]
+    );
+    return result.rows[0];
+  },
+
+  async verifyPassword(user, password) {
+    // if false -> wrong password
+    return bcrypt.compareSync(password, user.password)
+    // return user.password === password; // Placeholder
+  },
 };
 
 module.exports = User;

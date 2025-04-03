@@ -24,6 +24,8 @@ services:
       - db
     env_file:
       - .env
+    volumes:
+      - ./srcs/backend:/app
     networks:
       - matcha-network
 

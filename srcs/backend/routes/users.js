@@ -1,18 +1,17 @@
 const express = require('express');
-// const { getUsers, getUserById, createUser } = require('../db/queries');
 const router = express.Router();
-const User = require("../models/user");
+const {
+  registerUser,
+  getUser,
+  loginUser,
+} = require('../controllers/users');
 
-router.post("/register", async (req, res) => {
-    const { username, email, password } = req.body;
-    const newUser = await User.createUser(username, email, password);
-    res.json(newUser);
-  });
-  
-  router.get("/:id", async (req, res) => {
-    const user = await User.getUserById(req.params.id);
-    res.json(user);
-  });
+// router.post("/register", RegisterUser);
+// router.get("/:id", getUser);
+
+router.route('/register/').post(registerUser);
+router.route('/:id').get(getUser);
+router.route('/login/').post(loginUser);
   
 
 // // Get all users
