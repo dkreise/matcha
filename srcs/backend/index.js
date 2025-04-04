@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const userRoutes = require('./routes/users');
 const testRoutes = require('./routes/test');
 require('dotenv').config();
+const verifyJWT = require('./middleware/verifyJWT');
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,15 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'], // Make sure Authorization is allowed
 }));
 
+// middleware for cookies
+// app.use(cookieParser());
+
+// routes without need for JWT verification
+// app.post('/api/auth', authRoutes); // Register auth routes
+// ...
+
+// routes that need JWT verification
+// app.use(verifyJWT); // Apply JWT verification middleware to all routes below this line
 app.use('/api/users', userRoutes); // Register user routes
 app.get('/api/test', testRoutes);
 
