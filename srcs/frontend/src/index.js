@@ -4,6 +4,8 @@ import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from './services/auth';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from './pages/SignUp';
@@ -16,17 +18,17 @@ axios.defaults.baseURL = 'http://localhost:5000';
 const container = document.getElementById('root');
 
 const App = () => (
-    // <AuthProvider>
+    <AuthProvider>
         <BrowserRouter>
             <Routes>
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignUp />} />
-                {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} /> */}
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                {/* <Route path='/' element={<Home />} /> */}
                 <Route path="*" element={<NoPage />} />
             </Routes>
         </BrowserRouter>
-    // </AuthProvider>
+    </AuthProvider>
 );
 
 const root = ReactDOM.createRoot(container);
@@ -65,12 +67,7 @@ reportWebVitals();
 //     return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 // };
 
-// const useAuth = () => useContext(AuthContext);
 
-// const ProtectedRoute = ({ children }) => {
-//     const { user } = useAuth();
-//     return user ? children : <Navigate to='/login' />;
-// };
 
 // const Login = () => {
 //     const { login } = useAuth();
@@ -80,24 +77,3 @@ reportWebVitals();
 //     };
 //     return <button onClick={handleSubmit}>Login</button>;
 // };
-
-// const Home = () => {
-//     const { user, logout } = useAuth();
-//     return <div>Welcome {user?.email} <button onClick={logout}>Logout</button></div>;
-// };
-
-
-// export default function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<Layout />}>
-//           <Route index element={<Home />} />
-//           <Route path="blogs" element={<Blogs />} />
-//           <Route path="contact" element={<Contact />} />
-//           <Route path="*" element={<NoPage />} />
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }

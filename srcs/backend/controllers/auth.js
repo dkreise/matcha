@@ -15,6 +15,7 @@ const handleLogin = async (req, res) => {
     if (!isPasswordValid) {
         return res.status(401).json({ message: "Invalid credentials" });
     }
+    console.log('User found:', user);
     // Generate JWT token
     const accessToken = jwt.sign(
         { username: user.username },
@@ -32,9 +33,56 @@ const handleLogin = async (req, res) => {
     // cookie parsers needed for this
     res.cookie('jwt', refreshToken, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000 // 1 day
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        sameSite: 'strict', 
+        secure: false, // Set to true if using https
     });
     res.json({ accessToken });
 };
 
-module.exports = { handleLogin };
+// controllers/refreshToken.js
+
+const handleRefreshToken = (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(401);
+    console.log('Cookies:', cookies.jwt); 
+
+    const refreshToken = cookies.jwt;
+
+    // Check if refresh token is in the database (then change function to async!!)
+    // const user = await User.getUserByRefreshToken(refreshToken);
+    // if (!user) return res.sendStatus(403); // Forbidden
+
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (err, decoded) => {
+            if (err) return res.sendStatus(403); // Forbidden // to add: or user.username != decoded.username
+
+            const accessToken = jwt.sign(
+                { username: decoded.username },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '30s' }
+            );
+
+            console.log("New access token!!");
+
+            res.json({ accessToken });
+        }
+    );
+};
+
+// controllers/logout.js
+
+const handleLogout = (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204); // No content
+
+    // delete refresh token in the database
+    // await User.deleteRefreshToken(cookies.jwt);
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'Lax', secure: false }); // secure: true, sameSite: 'None' if using https 
+    res.sendStatus(204);
+};
+
+module.exports = { handleLogin, handleRefreshToken, handleLogout };

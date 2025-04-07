@@ -2,8 +2,9 @@ import axios from 'axios';
 
 export const handleLogin = async (username, password) => {
     try {
-        const response = await axios.post('/api/users/login', { username, password });
+        const response = await axios.post('/api/auth/login', { username, password }, { withCredentials: true });
         alert('Logged in successfully!');
+        return response; 
     } catch (error) {
         if (error.response) { // Server responded with a status other than 2xx
             alert('Login failed: ' + error.response.data.message);
