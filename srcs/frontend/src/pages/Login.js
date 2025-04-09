@@ -7,7 +7,7 @@ import InputField from "../components/InputField";
 const SignUpLink = () => {
     return (
         <p>
-            Don't have an account? <Link to="/signup">Register here</Link>
+            Don't have an account? <Link to="/signup">Sign Up here</Link>
         </p>
     );
 };
@@ -22,17 +22,23 @@ const Login = () => {
         return <Navigate to="/" replace />;
     }
 
+    const resetForm = () => {
+        setUsername('');
+        setPassword('');
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await handleLogin(username, password);
-        if (res.status === 200) {
+        if (res.success) {
             const data = res.data;
             setAccessToken(data.accessToken);
-            console.log("Login successful, access token: ", data.accessToken);
-            alert(data.accessToken)
+            // console.log("Login successful, access token: ", data.accessToken);
+            // alert(data.accessToken)
             navigate("/");
         } else {
-            alert("Login failed");
+            alert("Login failed: " + res.message);
+            resetForm();
         }
     };
 

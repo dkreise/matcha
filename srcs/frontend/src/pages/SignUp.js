@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { useAuth } from '../services/auth';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleSignUp } from "../services/signUp";
 import InputField from "../components/InputField";
 
@@ -12,14 +13,37 @@ const LoginLink = () => {
 };
 
 const SignUp = () => {
+    const navigate = useNavigate();
+    const { accessToken, setAccessToken } = useAuth();
     const [username, setUsername] = useState("");
     const [first_name, setFirstName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    if (accessToken) {
+        return <Navigate to="/" replace />;
+    }
+
+    const resetForm = () => {
+        setUsername('');
+        setFirstName('');
+        setEmail('');
+        setPassword('');
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await handleSignUp(username, first_name, email, password);
+        const res = await handleSignUp(username, first_name, email, password);
+        if (res.success) {
+            const data = res.data;
+            setAccessToken(data.accessToken);
+            // console.log("Login successful, access token: ", data.accessToken);
+            // alert(data.accessToken)
+            navigate("/");
+        } else {
+            alert("Sign up failed: " + res.message);
+            resetForm();
+        }
     };
 
     return (

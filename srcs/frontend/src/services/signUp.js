@@ -2,13 +2,19 @@ import axios from "axios";
 
 export const handleSignUp = async (username, first_name, email, password) => {
     try {
-        const response = await axios.post('/api/users/register', { username, first_name, email, password });
-        alert('Signed up successfully!');
+        const response = await axios.post(
+            '/api/auth/signup',
+            { username, first_name, email, password },
+            { withCredentials: true }
+        );
+        return { success: true, data: response.data };
     } catch (error) {
-        if (error.response) { // Server responded with a status other than 2xx
-            alert('Sign up failed: ' + error.response.data.message);
-        } else { // No response from server (network error, etc.)
-            alert('An error occurred: ' + error.message);
+        let message = "Unknown error";
+        if (error.response) {
+            message = error.response.data.message;
+        } else {
+            message = error.message;
         }
+        return { success: false, message };
     }
 };

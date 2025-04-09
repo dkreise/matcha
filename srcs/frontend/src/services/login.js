@@ -2,38 +2,20 @@ import axios from 'axios';
 
 export const handleLogin = async (username, password) => {
     try {
-        const response = await axios.post('/api/auth/login', { username, password }, { withCredentials: true });
-        alert('Logged in successfully!');
-        return response; 
+        const response = await axios.post(
+            '/api/auth/login',
+            { username, password },
+            { withCredentials: true }
+        );
+        // alert('Logged in successfully!');
+        return { success: true, data: response.data };
     } catch (error) {
-        if (error.response) { // Server responded with a status other than 2xx
-            alert('Login failed: ' + error.response.data.message);
-        } else { // No response from server (network error, etc.)
-            alert('An error occurred: ' + error.message);
+        let message = "Unknown error";
+        if (error.response) {
+            message = error.response.data.message;
+        } else {
+            message = error.message;
         }
+        return { success: false, message };
     }
 };
-
-
-
-// export const handleLogin = async (username, password) => {
-//     try {
-//         const response = await fetch('/api/login', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ username, password }),
-//         });
-
-//         if (response.ok) {
-//             // Handle successful login
-//             alert('Logged in successfully!');
-//         } else {
-//             // Handle error
-//             alert('Login failed');
-//         }
-//     } catch (error) {
-//         alert('An error occurred: ' + error.message);
-//     }
-// };

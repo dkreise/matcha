@@ -40,7 +40,42 @@ const handleLogin = async (req, res) => {
     res.json({ accessToken });
 };
 
-// controllers/refreshToken.js
+const handleSignup = async (req, res) => {
+    const { username, first_name, email, password } = req.body;
+    if (!username || !first_name || !email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+    const existingUser = await User.getUserByUsername(username);
+    if (existingUser) {
+        return res.status(409).json({ message: "Username already exists" });
+    }
+    // TODO: check email if exists, check username for chars, check password strength
+
+    const newUser = await User.createUser(username, first_name, email, password);
+    if (!newUser) {
+        return res.status(500).json({ message: "Error creating user" });
+    }
+    const accessToken = jwt.sign(
+        { username: newUser.username },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '30s' } // to change later
+    );
+    const refreshToken = jwt.sign(
+        { username: newUser.username },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '1d' } 
+    );
+    // Save refresh token to database?
+    // await User.saveRefreshToken(newUser.id, refreshToken);
+    // cookie parsers needed for this
+    res.cookie('jwt', refreshToken, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        sameSite: 'strict', 
+        secure: false, // Set to true if using https
+    });
+    res.json({ accessToken });
+};
 
 const handleRefreshToken = (req, res) => {
     const cookies = req.cookies;
@@ -72,8 +107,6 @@ const handleRefreshToken = (req, res) => {
     );
 };
 
-// controllers/logout.js
-
 const handleLogout = (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204); // No content
@@ -85,4 +118,4 @@ const handleLogout = (req, res) => {
     res.sendStatus(204);
 };
 
-module.exports = { handleLogin, handleRefreshToken, handleLogout };
+module.exports = { handleLogin, handleSignup, handleRefreshToken, handleLogout };
