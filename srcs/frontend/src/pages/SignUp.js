@@ -36,6 +36,7 @@ const SignUp = () => {
         const res = await handleSignUp(username, first_name, email, password);
         if (res.success) {
             const data = res.data;
+            localStorage.setItem('accessToken', data.accessToken);
             setAccessToken(data.accessToken);
             // console.log("Login successful, access token: ", data.accessToken);
             // alert(data.accessToken)

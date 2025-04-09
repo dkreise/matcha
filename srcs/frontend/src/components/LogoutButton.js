@@ -11,6 +11,7 @@ const LogoutButton = () => {
         try {
             await axios.get('/api/auth/logout', { withCredentials: true }); // clears the cookie on backend
             setAccessToken(null); // clears access token from context
+            localStorage.removeItem('accessToken');
             navigate('/login');
         } catch (err) {
             console.error("Logout failed", err);
