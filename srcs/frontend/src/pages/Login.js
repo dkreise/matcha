@@ -3,6 +3,7 @@ import { useAuth } from '../services/auth';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleLogin } from "../services/login";
 import InputField from "../components/InputField";
+import { Button } from "../components/ui/button"
 
 const SignUpLink = () => {
     return (
@@ -59,7 +60,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Login</button>
+                <Button variant="outline" type="submit">Login</Button>
             </form>
             <SignUpLink />
         </div>

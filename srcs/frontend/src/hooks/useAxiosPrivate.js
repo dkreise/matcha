@@ -21,12 +21,13 @@ const useAxiosPrivate = () => {
             response => response,
             async error => {
                 const prevRequest = error.config;
-                if (error.response?.status === 401 && !prevRequest._retry) {
+                if ((error.response?.status === 401 || error.response?.status === 403) && !prevRequest._retry) {
                     prevRequest._retry = true;
                     try {
                         const res = await axiosPrivate.get('/api/auth/refresh');
                         const newToken = res.data.accessToken;
                         setAccessToken(newToken);
+                        console.log('New Access Token!!');
                         prevRequest.headers['Authorization'] = `Bearer ${newToken}`;
                         return axiosPrivate(prevRequest);
                     } catch (err) {

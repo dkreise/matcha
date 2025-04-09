@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require('./routes/users');
 const testRoutes = require('./routes/test');
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 require('dotenv').config();
 const verifyJWT = require('./middleware/verifyJWT');
 
@@ -27,6 +28,7 @@ app.use('/api/auth', authRoutes);
 // routes that need JWT verification
 app.use(verifyJWT); // Apply JWT verification middleware to all routes below this line
 app.use('/api/users', userRoutes); // Register user routes
+app.use('/api/profile', profileRoutes); // Register profile routes
 app.use('/api/test', testRoutes);
 
 app.listen(5000, () => console.log("Server running on port 5000"));

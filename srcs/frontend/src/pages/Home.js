@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 import LogoutButton from '../components/LogoutButton';
+import { Button } from "../components/ui/button"
 
 const Home = () => {
     const { accessToken } = useAuth();
@@ -9,16 +10,26 @@ const Home = () => {
         alert('You clicked me!');
     }
 
-    return <>
-        <h1>Home</h1>
-        <button onClick={handleClick}>Click me</button>
-        <br></br>
-        <Link to="/login">Login</Link>
-        <br></br>
-        <Link to="/signup">Sign Up</Link>
-        <br></br>
-        <LogoutButton />
-    </>;
+    return (
+        <div>
+            <h1>Home</h1>
+            <button onClick={handleClick}>Click me</button>
+            <br></br>
+            <Button asChild>
+                <Link to="/profile">Profile</Link>
+            </Button>
+            <br></br>
+            <Button asChild>
+                <Link to="/login">Login</Link>
+            </Button>
+            <br></br>
+            <Button asChild>
+                <Link to="/signup">Sign Up</Link>
+            </Button>
+            <br></br>
+            <LogoutButton />
+        </div>
+    );
 };
   
 export default Home;
