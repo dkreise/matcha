@@ -1,9 +1,10 @@
 import { Input } from "./ui/Input"
+import { Label } from "./ui/Label"
 
 const InputField = ({ label, type, value, onChange }) => {
     return (
         <div className="mb-4">
-            <label className="block mb-1 font-medium text-gray-700">{label}:</label>
+            <Label>{label}:</Label>
             <Input
                 type={type}
                 value={value}

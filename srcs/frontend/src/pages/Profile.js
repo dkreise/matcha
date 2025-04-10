@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import LogoutButton from '../components/LogoutButton';
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/Input"
+import { Label } from "../components/ui/Label"
+import { Avatar } from "../components/ui/Avatar"
 
 const Profile = () => {
     const axiosPrivate = useAxiosPrivate();
@@ -33,6 +35,7 @@ const Profile = () => {
                 <AvatarImage src="https://github.com/dkreise.png" />
                 <AvatarFallback>YN</AvatarFallback>
                 </Avatar> */}
+                <Avatar src="https://github.com/dkreise.png" size="lg" />
                 <div>
                 <h1 className="text-2xl font-bold">{profile.username}</h1>
                 <p className="text-gray-500">{profile.email}</p>
@@ -42,11 +45,11 @@ const Profile = () => {
             {/* Profile Form */}
             <div className="space-y-4">
                 <div>
-                <label htmlFor="name">Name</label>
+                <Label htmlFor="name">Name</Label>
                 <Input id="name" type="text" placeholder="Your Name" />
                 </div>
                 <div>
-                <label htmlFor="email">Email</label>
+                <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="your.email@example.com" />
                 </div>
                 <Button>Update Profile</Button>
