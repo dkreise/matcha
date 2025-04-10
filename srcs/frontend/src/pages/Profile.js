@@ -3,6 +3,8 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { getProfileData } from '../services/profile';
 import { Link } from 'react-router-dom';
 import LogoutButton from '../components/LogoutButton';
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/Input"
 
 const Profile = () => {
     const axiosPrivate = useAxiosPrivate();
@@ -24,14 +26,37 @@ const Profile = () => {
     if (!profile) return <div>Loading...</div>;
 
     return (
-        <div>
-        <h2>Welcome, {profile.username}!</h2>
-        <p>Email: {profile.email}</p>
-        {/* render more data */}
-        <br></br>
-        <Link to="/">Home</Link>
-        <br></br>
-        <LogoutButton />
+        <div className="max-w-4xl mx-auto p-6 space-y-6">
+            {/* Profile Header */}
+            <div className="flex items-center space-x-4">
+                {/* <Avatar>
+                <AvatarImage src="https://github.com/dkreise.png" />
+                <AvatarFallback>YN</AvatarFallback>
+                </Avatar> */}
+                <div>
+                <h1 className="text-2xl font-bold">{profile.username}</h1>
+                <p className="text-gray-500">{profile.email}</p>
+                </div>
+            </div>
+        
+            {/* Profile Form */}
+            <div className="space-y-4">
+                <div>
+                <label htmlFor="name">Name</label>
+                <Input id="name" type="text" placeholder="Your Name" />
+                </div>
+                <div>
+                <label htmlFor="email">Email</label>
+                <Input id="email" type="email" placeholder="your.email@example.com" />
+                </div>
+                <Button>Update Profile</Button>
+            </div>
+            <Button variant="secondary">
+                <Link to="/">Home</Link>
+            </Button>
+            <div className="mb-4">
+                <LogoutButton />
+            </div>
         </div>
     );
 };

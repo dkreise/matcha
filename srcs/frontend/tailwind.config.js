@@ -6,12 +6,16 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // colors: {
-      //   primary: "#6366f1", // indigo-500
-      //   background: "#ffffff",
-      //   // add more as needed
-      // },
+      colors: {
+        // primary: "#6366f1", // Indigo
+        primary: "#789048", // Matcha 	#789048  #74A12E
+        "primary-foreground": "#ffffff", // White
+        background: "#f9fafb", // Gray 50
+        destructive: "#ef4444", // Red
+        "destructive-foreground": "#ffffff", // White
+        // etc.
+      },
     },
-  },  
+  }, 
   plugins: [],
 }

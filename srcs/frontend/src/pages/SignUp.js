@@ -3,12 +3,13 @@ import { useAuth } from '../services/auth';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleSignUp } from "../services/signUp";
 import InputField from "../components/InputField";
+import { Button } from "../components/ui/button"
 
 const LoginLink = () => {
     return (
-        <p>
-            Already have an account? <Link to="/login">Login here</Link>
-        </p>
+        <div className="mt-4 text-center text-sm">
+            Already have an account? <Link to="/login" className="underline underline-offset-4">Login here</Link>
+        </div>
     );
 };
 
@@ -48,8 +49,8 @@ const SignUp = () => {
     };
 
     return (
-        <div style={{ maxWidth: "300px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
-            <h2>Sign Up</h2>
+        <div className="max-w-sm mx-auto mt-20 p-6 border border-gray-300 rounded-xl shadow-md bg-white">
+            <h2 className="text-2xl font-semibold text-center mb-6 text-primary">Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <InputField
                     label="Username"
@@ -75,7 +76,7 @@ const SignUp = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Sign Up</button>
+                <Button type="submit" className="w-full">Sign Up</Button>
             </form>
             <LoginLink />
         </div>

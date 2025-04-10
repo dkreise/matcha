@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 import axios from 'axios';
+import { Button } from './ui/button';
 
 const LogoutButton = () => {
     const { setAccessToken } = useAuth();
@@ -18,7 +19,7 @@ const LogoutButton = () => {
         }
     };
 
-    return <button onClick={handleLogout}>Logout</button>;
+    return <Button variant="outline" onClick={handleLogout}>Logout</Button>;
 };
 
 export default LogoutButton;

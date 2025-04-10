@@ -7,9 +7,9 @@ import { Button } from "../components/ui/button"
 
 const SignUpLink = () => {
     return (
-        <p>
-            Don't have an account? <Link to="/signup">Sign Up here</Link>
-        </p>
+        <div className="mt-4 text-center text-sm">
+            Don't have an account? <Link to="/signup" className="underline underline-offset-4">Sign Up here</Link>
+        </div>
     );
 };
 
@@ -45,8 +45,8 @@ const Login = () => {
     };
 
     return (
-        <div style={{ maxWidth: "300px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
-            <h2>Login</h2>
+        <div className="max-w-sm mx-auto mt-20 p-6 border border-gray-300 rounded-xl shadow-md bg-white">
+            <h2 className="text-2xl font-semibold text-center mb-6 text-primary">Login</h2>
             <form onSubmit={handleSubmit}>
                 <InputField
                     label="Username"
@@ -60,7 +60,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <Button variant="outline" type="submit">Login</Button>
+                <Button type="submit" className="w-full">Login</Button>
             </form>
             <SignUpLink />
         </div>
