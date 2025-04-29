@@ -45,3 +45,5 @@ runMigrations();
 // This executes migrations.js inside the matcha-backend container.
 
 // docker exec -it matcha-db psql -U matcha_user -d matcha_db
+// DELETE FROM tags WHERE id = 5;
+

@@ -20,7 +20,7 @@ const handleLogin = async (req, res) => {
     const accessToken = jwt.sign(
         { username: user.username },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30s' } // to change later
+        { expiresIn: '300s' } // to change later
     );
     const refreshToken = jwt.sign(
         { username: user.username },
@@ -58,7 +58,7 @@ const handleSignup = async (req, res) => {
     const accessToken = jwt.sign(
         { username: newUser.username },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30s' } // to change later
+        { expiresIn: '300s' } // to change later
     );
     const refreshToken = jwt.sign(
         { username: newUser.username },
@@ -97,7 +97,7 @@ const handleRefreshToken = (req, res) => {
             const accessToken = jwt.sign(
                 { username: decoded.username },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30s' }
+                { expiresIn: '300s' }
             );
 
             console.log("New access token!!");

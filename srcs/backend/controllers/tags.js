@@ -1,30 +1,30 @@
-const pool = require("../db/index");
+// const pool = require("../db/index");
+const User = require("../models/user");
+const Tags = require("../models/tags");
 
-// const getUserTags = async (username) => {
-//     // const username = req.user;
-//     try {
-//         const user = await User.getUserByUsername(username);
-//         // if (!user) return res.status(404).json({ message: 'User not found' });
-//         // res.json({
-//         //     id: user.id,
-//         //     username: user.username,
-//         //     first_name: user.first_name,
-//         //     email: user.email,
-//         // });
-//         const userId = user.id;
-//         const result = await pool.query(`
-//             SELECT t.id, t.name
-//             FROM tags t
-//             JOIN user_tags ut ON ut.tag_id = t.id
-//             WHERE ut.user_id = $1
-//           `, [userId]);
-        
-//         // res.json(result.rows);
-//         return result.rows;
-//     } catch (err) {
-//         // res.status(500).json({ error: err.message });
-//     }
-// };
+const associateTags = async (req, res) => {
+    const { tag_name } = req.body;
+    const username = req.user;
 
-// module.exports = { getUserTags };
+    try {
+        const user = await User.getUserByUsername(username);
+        if (!user)
+            return res.status(404).json({ message: 'User not found' });
+
+        let tag = await Tags.getTagByName(tag_name);
+        if (!tag) {
+            // If the tag doesn't exist, create it
+            const newTag = await Tags.createTag(tag_name);
+            tag = newTag;
+        }
+        // Associate the tag with the user
+        await Tags.associateTagWithUser(tag.id, user.id);
+        return res.status(200).json(tag);
+    } catch (err) {
+        console.error("Error creating tag and associating with user:", err);
+        res.status(500).json({ message: "Error creating tag and associating with user" });
+    }
+};
+
+module.exports = { associateTags };
   
