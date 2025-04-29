@@ -24,4 +24,11 @@ module.exports = {
     },
   }, 
   plugins: [],
+  // variants: {
+  //   extend: {
+  //     backgroundColor: ['data-active'],
+  //     textColor: ['data-active'],
+  //     borderColor: ['data-active'],
+  //   },
+  // },
 }

@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 import axios from 'axios';
-import { Button } from './ui/button';
+import { Button } from './ui/Button';
 
 const LogoutButton = () => {
     const { setAccessToken } = useAuth();

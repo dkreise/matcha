@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 import LogoutButton from '../components/LogoutButton';
-import { Button } from "../components/ui/button"
+import { Button } from "../components/ui/Button"
 
 const Home = () => {
     const { accessToken } = useAuth();

@@ -3,7 +3,7 @@ import { useAuth } from '../services/auth';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleLogin } from "../services/login";
 import InputField from "../components/InputField";
-import { Button } from "../components/ui/button"
+import { Button } from "../components/ui/Button"
 
 const SignUpLink = () => {
     return (
@@ -51,12 +51,14 @@ const Login = () => {
                 <InputField
                     label="Username"
                     type="text"
+                    id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <InputField
                     label="Password"
                     type="password"
+                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />

@@ -3,7 +3,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { getProfileData } from '../services/profile';
 import { Link } from 'react-router-dom';
 import LogoutButton from '../components/LogoutButton';
-import { Button } from "../components/ui/button"
+import { Button } from "../components/ui/Button"
 import { Input } from "../components/ui/Input"
 import { Label } from "../components/ui/Label"
 import { Avatar } from "../components/ui/Avatar"
@@ -72,6 +72,9 @@ const Profile = () => {
             </div> */}
             <Button variant="secondary">
                 <Link to="/">Home</Link>
+            </Button>
+            <Button variant="secondary">
+                <Link to="/profile/settings">Settings</Link>
             </Button>
             <div className="mb-4">
                 <LogoutButton />

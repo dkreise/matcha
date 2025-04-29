@@ -37,8 +37,8 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    # volumes:
-    #   - ./srcs/frontend:/app
+    volumes:
+      - ./srcs/frontend:/app
     networks:
       - matcha-network
 

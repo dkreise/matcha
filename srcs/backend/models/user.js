@@ -37,6 +37,14 @@ const User = {
       return result.rows[0];
     },
 
+    async updateUserProfile(id, username, first_name, last_name, email, bio) {
+      const result = await pool.query(
+        "UPDATE users SET username = $1, first_name = $2, last_name = $3, email = $4, bio = $5 WHERE id = $6 RETURNING *",
+        [username, first_name, last_name, email, bio, id]
+      );
+      return result.rows[0];
+    },
+
     async deleteUser(id) {
       const result = await pool.query(
         "DELETE FROM users WHERE id = $1 RETURNING *",
