@@ -7,6 +7,7 @@ import { Button } from "../components/ui/Button"
 import { Input } from "../components/ui/Input"
 import { Label } from "../components/ui/Label"
 import { Avatar } from "../components/ui/Avatar"
+import Tag from "../components/ui/Tag";
 import InterestsCard from "../components/InterestsCard"
 import TagsCard from "../components/TagsCard"
 
@@ -57,7 +58,15 @@ const Profile = () => {
             </div>
             {/* Profile Interests (Tags) */}
             {/* <InterestsCard tags={userTags} /> */}
-            <TagsCard title="Interests" tags={userTags} onAddTag={handleAddTag} />
+            {/* <TagsCard title="Interests" tags={userTags} onAddTag={handleAddTag} /> */}
+            <div className="p-6 bg-white rounded-xl shadow-md">
+                <h2 className="text-xl text-dark font-semibold mb-4">Interests</h2>
+                <div className="flex flex-wrap gap-2">
+                    {userTags.map((tag) => (
+                        <Tag key={tag.id} label={tag.name} />
+                    ))}
+                </div>
+            </div>
             {/* Profile Form */}
             {/* <div className="space-y-4">
                 <div>

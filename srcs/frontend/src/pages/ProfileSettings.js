@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { getProfileData, updateProfileData } from '../services/profile';
+import { getProfileData, updateProfileData, getAllTags, associateTags } from '../services/profile';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/Tabs";
 import { Button } from "../components/ui/Button";
 import InputField from "../components/InputField";
+import TagsCard from "../components/TagsCard"
 import { Input } from "../components/ui/Input";
 import { Label } from "../components/ui/Label";
 
 const ProfileSettings = () => {
     const axiosPrivate = useAxiosPrivate();
-    // Dummy initial profile
     const [profile, setProfile] = useState({ username: "", email: "", first_name: "", last_name: "", bio: ""})
+    const [userTags, setUserTags] = useState(null);
+    const [availableTags, setAvailableTags] = useState([]);
 
-    // Example of loading profile data (replace with real API call)
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -25,6 +26,7 @@ const ProfileSettings = () => {
                     last_name: data.last_name ?? "",
                     bio: data.bio ?? "",
                 });
+                setUserTags(data.tags);
             } catch (err) {
                 console.error('Error fetching profile:', err);
             }
@@ -32,10 +34,20 @@ const ProfileSettings = () => {
         fetchProfile();
     }, [axiosPrivate]);
 
+    useEffect(() => {
+        const fetchAvailableTags = async () => {
+            try {
+                const tags = await getAllTags(axiosPrivate);
+                setAvailableTags(tags); // [{ id: 1, name: 'travel' }, ...]
+            } catch (err) {
+                console.error('Error fetching available tags:', err);
+            }
+        };
+        fetchAvailableTags();
+    }, [axiosPrivate]);
+
     const handlePersonalInfoSubmit = async (e) => {
         e.preventDefault();
-        // Get values from form
-        // const formData = new FormData(e.target);
         const updatedProfile = {
             username: profile.username,
             email: profile.email,
@@ -43,7 +55,6 @@ const ProfileSettings = () => {
             last_name: profile.last_name,
             bio: profile.bio,
         };
-        // Save to backend
         console.log("Saving personal info:", updatedProfile);
         try {
             const response = await updateProfileData(axiosPrivate, updatedProfile);
@@ -53,28 +64,9 @@ const ProfileSettings = () => {
             console.error("Error updating profile:", err);
             // alert("Error updating profile");
         }
-    };
+    };   
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const res = await handleLogin(username, password);
-    //     if (res.success) {
-    //         const data = res.data;
-    //         localStorage.setItem('accessToken', data.accessToken);
-    //         setAccessToken(data.accessToken);
-    //         // console.log("Login successful, access token: ", data.accessToken);
-    //         // alert(data.accessToken)
-    //         navigate("/");
-    //     } else {
-    //         alert("Login failed: " + res.message);
-    //         resetForm();
-    //     }
-    // };
-
-    // User tags state
-    const [userTags, setUserTags] = useState([])
-
-    const handleChange = (e) => {
+    const handleProfileChange = (e) => {
         const { id, value } = e.target
         setProfile((prev) => ({
             ...prev,
@@ -82,28 +74,33 @@ const ProfileSettings = () => {
         }))
     }
 
-    // const handlePersonalInfoSubmit = (e) => {
-    //     e.preventDefault()
-    //     // Get values from form
-    //     const formData = new FormData(e.target)
-    //     const updatedProfile = {
-    //     username: formData.get("username"),
-    //     email: formData.get("email"),
-    //     }
-    //     // Save to backend
-    //     console.log("Saving personal info:", updatedProfile)
+    const handleAddTag = async (name) => {
+        try {
+            await associateTags(axiosPrivate, { tag_name: name });
+        } catch (err) {
+            console.error("Error associating tag:", err);
+        }
+        const newTag = { id: Date.now(), name }; // You can adjust this for backend
+        setUserTags([...userTags, newTag]);
+    };
+
+    // const allPossibleTags = useMemo(() => [
+    //   { id: 1, name: 'hiking' },
+    //   { id: 2, name: 'travel' },
+    //   { id: 3, name: 'coding' },
+    //   // fetch from backend later
+    // ], []);
+
+    // const handleAddTag = (tagName) => {
+    //     const normalized = tagName.trim().toLowerCase()
+    //     if (!normalized) return
+
+    //     const newTag = { id: Date.now(), name: normalized }
+    //     setUserTags((prev) => [...prev, newTag])
+
+    //     // Optionally send to backend
+    //     console.log("Adding tag:", normalized)
     // }
-
-    const handleAddTag = (tagName) => {
-        const normalized = tagName.trim().toLowerCase()
-        if (!normalized) return
-
-        const newTag = { id: Date.now(), name: normalized }
-        setUserTags((prev) => [...prev, newTag])
-
-        // Optionally send to backend
-        console.log("Adding tag:", normalized)
-    }
 
     const handlePreferencesSubmit = (e) => {
         e.preventDefault()
@@ -135,35 +132,35 @@ const ProfileSettings = () => {
                 type="text"
                 id="username"
                 value={profile.username}
-                onChange={handleChange}
+                onChange={handleProfileChange}
             />
             <InputField
                 label="Email"
                 type="email"
                 id="email"
                 value={profile.email}
-                onChange={handleChange}
+                onChange={handleProfileChange}
             />
             <InputField
                 label="First Name"
                 type="text"
                 id="first_name"
                 value={profile.first_name}
-                onChange={handleChange}
+                onChange={handleProfileChange}
             />
             <InputField
                 label="Last Name"
                 type="text"
                 id="last_name"
                 value={profile.last_name}
-                onChange={handleChange}
+                onChange={handleProfileChange}
             />
             <InputField
                 label="Bio"
                 type="text"
                 id="bio"
                 value={profile.bio}
-                onChange={handleChange}
+                onChange={handleProfileChange}
             />
             <Button type="submit">Save Personal Info</Button>
           </form>
@@ -172,6 +169,7 @@ const ProfileSettings = () => {
         <TabsContent value="interests">
           {/* You can reuse your <TagsCard /> component here */}
           {/* <TagsCard tags={userTags} onAddTag={handleAddTag} /> */}
+          <TagsCard title="Interests" tags={userTags} onAddTag={handleAddTag} suggestions={availableTags} />
         </TabsContent>
 
         <TabsContent value="preferences">

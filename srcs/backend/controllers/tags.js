@@ -2,6 +2,16 @@
 const User = require("../models/user");
 const Tags = require("../models/tags");
 
+const getAllTags = async (req, res) => {
+    try {
+        const tags = await Tags.getTags();
+        res.status(200).json(tags);
+    } catch (err) {
+        console.error("Error fetching tags:", err);
+        res.status(500).json({ message: "Error fetching tags" });
+    }
+};
+
 const associateTags = async (req, res) => {
     const { tag_name } = req.body;
     const user_id = req.user_id;
@@ -26,5 +36,5 @@ const associateTags = async (req, res) => {
     }
 };
 
-module.exports = { associateTags };
+module.exports = { associateTags, getAllTags };
   
