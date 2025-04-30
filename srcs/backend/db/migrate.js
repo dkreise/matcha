@@ -2,8 +2,24 @@ const pool = require('./index');
 const fs = require('fs');
 const path = require('path');
 
+async function waitForDB(retries = 10, delay = 1000) {
+    while (retries > 0) {
+        try {
+            await pool.query('SELECT 1'); // test query
+            console.log('✅ Database is ready.');
+            return;
+        } catch (err) {
+            console.log(`⏳ Waiting for database... (${retries} retries left)`);
+            retries--;
+            await new Promise(res => setTimeout(res, delay));
+        }
+    }
+    throw new Error("❌ Could not connect to the database after multiple attempts.");
+}
+
 async function runMigrations() {
     try {
+        await waitForDB();
         // Ensure migrations table exists
         await pool.query(`
             CREATE TABLE IF NOT EXISTS migrations (

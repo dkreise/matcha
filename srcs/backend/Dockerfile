@@ -17,6 +17,5 @@ COPY . .
 EXPOSE 5000
 
 # Start the Express app
-# CMD ["npm", "start"]
-# CMD ["node", "server.js"]
 CMD ["npm", "run", "dev"]
+# CMD ["sh", "./wait-for-it.sh", "db", "5432", "--", "npm", "run", "dev"]
