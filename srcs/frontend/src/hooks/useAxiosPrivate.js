@@ -4,7 +4,7 @@ import axiosPrivate from '../services/axiosPrivate';
 import { useAuth } from '../services/auth';
 
 const useAxiosPrivate = () => {
-    const { accessToken, setAccessToken } = useAuth();
+    const { accessToken, setAccessToken, logout } = useAuth();
 
     useEffect(() => {
         const requestIntercept = axiosPrivate.interceptors.request.use(
@@ -34,6 +34,10 @@ const useAxiosPrivate = () => {
                         console.error("Refresh failed", err);
                         return Promise.reject(err);
                     }
+                }
+                if (error.response?.status === 404 && error.response?.data?.message === 'User not found') {
+                    console.warn('User not found, logging out.');
+                    logout();
                 }
                 return Promise.reject(error);
             }
