@@ -4,10 +4,10 @@ const Tags = require("../models/tags");
 
 const associateTags = async (req, res) => {
     const { tag_name } = req.body;
-    const username = req.user;
+    const user_id = req.user_id;
 
     try {
-        const user = await User.getUserByUsername(username);
+        const user = await User.getUserById(Number(user_id));
         if (!user)
             return res.status(404).json({ message: 'User not found' });
 

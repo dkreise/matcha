@@ -1,9 +1,9 @@
 const User = require("../models/user");
 
 const getProfileData = async (req, res) => {
-    const username = req.user;
+    const user_id = req.user_id;
     try {
-        const user = await User.getUserByUsername(username);
+        const user = await User.getUserById(Number(user_id));
         if (!user)
             return res.status(404).json({ message: 'User not found' });
         
@@ -23,11 +23,11 @@ const getProfileData = async (req, res) => {
 };
 
 const updateProfileData = async (req, res) => {
-    const old_username = req.user;
+    const user_id = req.user_id;
     const { username, first_name, last_name, email, bio } = req.body;
 
     try {
-        const user = await User.getUserByUsername(old_username);
+        const user = await User.getUserById(Number(user_id));
         if (!user)
             return res.status(404).json({ message: 'User not found' });
 

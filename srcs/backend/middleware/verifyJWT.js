@@ -17,7 +17,7 @@ const verifyJWT = (req, res, next) => {
                 console.log('Access token expired!!');
                 return res.sendStatus(403); // Forbidden
             }
-            req.user = decoded.username;
+            req.user_id = decoded.id;
             next();
         }
     );

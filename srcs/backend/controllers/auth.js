@@ -18,12 +18,12 @@ const handleLogin = async (req, res) => {
     console.log('User found:', user);
     // Generate JWT token
     const accessToken = jwt.sign(
-        { username: user.username },
+        { id: user.id },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '300s' } // to change later
+        { expiresIn: '300s' } // to change later, '15m' for example
     );
     const refreshToken = jwt.sign(
-        { username: user.username },
+        { id: user.id },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' } 
     );
@@ -56,12 +56,12 @@ const handleSignup = async (req, res) => {
         return res.status(500).json({ message: "Error creating user" });
     }
     const accessToken = jwt.sign(
-        { username: newUser.username },
+        { id: newUser.id },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: '300s' } // to change later
     );
     const refreshToken = jwt.sign(
-        { username: newUser.username },
+        { id: newUser.id },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' } 
     );
@@ -95,7 +95,7 @@ const handleRefreshToken = (req, res) => {
             if (err) return res.sendStatus(403); // Forbidden // to add: or user.username != decoded.username
 
             const accessToken = jwt.sign(
-                { username: decoded.username },
+                { id: decoded.id },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '300s' }
             );
