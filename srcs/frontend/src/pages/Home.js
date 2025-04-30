@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 import LogoutButton from '../components/LogoutButton';
 import { Button } from "../components/ui/Button"
+import SuggestedProfileCard from '../components/SuggestedProfileCard';
 
 const Home = () => {
     const { accessToken } = useAuth();
@@ -19,13 +20,14 @@ const Home = () => {
                 <Link to="/profile">Profile</Link>
             </Button>
             <br></br>
-            <Button asChild>
+            <SuggestedProfileCard name={"Name"} fame={3}/>
+            {/* <Button asChild>
                 <Link to="/login">Login</Link>
             </Button>
             <br></br>
             <Button asChild>
                 <Link to="/signup">Sign Up</Link>
-            </Button>
+            </Button> */}
             <br></br>
             <LogoutButton />
         </div>
