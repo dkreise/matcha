@@ -161,23 +161,41 @@ const ProfileSettings = () => {
         </TabsContent>
 
         <TabsContent value="interests">
-          {/* You can reuse your <TagsCard /> component here */}
-          {/* <TagsCard tags={userTags} onAddTag={handleAddTag} /> */}
           <TagsCard title="Interests" tags={userTags} onAddTag={handleAddTag} suggestions={availableTags} />
         </TabsContent>
 
         <TabsContent value="preferences">
-          <form onSubmit={handlePreferencesSubmit}>
-            {/* Your custom fields like language, theme, etc. */}
-            <Button type="submit">Save Preferences</Button>
-          </form>
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Preferences</CardTitle>
+              <CardDescription>
+                Make changes to your preferences here. Click save when you're done.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              
+            </CardContent>
+            <CardFooter>
+              <Button onClick={handlePreferencesSubmit}>Save Preferences</Button>
+            </CardFooter>
+          </Card>
         </TabsContent>
 
         <TabsContent value="notifications">
-          <form onSubmit={handleNotificationsSubmit}>
-            {/* Toggle switches or checkboxes */}
-            <Button type="submit">Save Notification Settings</Button>
-          </form>
+          <Card>
+            <CardHeader>
+              <CardTitle>Notification Settings</CardTitle>
+              <CardDescription>
+                Make changes to your notification settings here. Click save when you're done.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              
+            </CardContent>
+            <CardFooter>
+              <Button onClick={handleNotificationsSubmit}>Save Notification Settings</Button>
+            </CardFooter>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>

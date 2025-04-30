@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp';
 import Profile from "./pages/Profile";
 import ProfileSettings from './pages/ProfileSettings';
 import NoPage from "./pages/NoPage";
+import Layout from './components/Layout';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:5000';
@@ -25,9 +26,14 @@ const App = () => (
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignUp />} />
                 {/* <Route path='/' element={<Home />} /> */}
-                <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/settings" element={<ProfileSettings />} />
+                </Route>
+                {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                <Route path='/profile/settings' element={<ProtectedRoute><ProfileSettings /></ProtectedRoute>} />
+                <Route path='/profile/settings' element={<ProtectedRoute><ProfileSettings /></ProtectedRoute>} /> */}
                 <Route path="*" element={<NoPage />} />
             </Routes>
         </BrowserRouter>
