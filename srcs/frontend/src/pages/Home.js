@@ -5,7 +5,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import LogoutButton from '../components/LogoutButton';
 import { Button } from "../components/ui/Button"
 import SuggestedProfileCard from '../components/SuggestedProfileCard';
-import { getRecommendations } from '../services/matches';
+import { getRecommendations, getSharedTags } from '../services/matches';
 
 const Home = () => {
     const { accessToken } = useAuth();
@@ -59,12 +59,28 @@ const Home = () => {
 
     const currentProfile = profiles[currentIndex]
 
+    const [sharedTagsCount, setSharedTagsCount] = useState(0)
+
+    useEffect(() => {
+        const fetchSharedTags = async () => {
+            if (!currentProfile) return
+            try {
+                const sharedTags = await getSharedTags(axiosPrivate, currentProfile.id)
+                setSharedTagsCount(sharedTags.length) // assuming it's an array of tags
+            } catch (err) {
+                console.error("Error fetching shared tags:", err)
+                setSharedTagsCount(0)
+            }
+        }
+        fetchSharedTags()
+    }, [currentProfile])
+
     return (
         <div className="flex flex-col items-center justify-center gap-8 p-8">
             <h1 className="text-2xl">Suggested profiles for you:</h1>
             {isLoading && profiles.length === 0 && <p>Loading profiles...</p>}
             {!currentProfile && !isLoading && <p>No more matches right now 😢</p>}
-            {currentProfile && <SuggestedProfileCard profile={currentProfile}/>}
+            {currentProfile && <SuggestedProfileCard profile={currentProfile} match={sharedTagsCount}/>}
             <br></br>
             <LogoutButton />
         </div>

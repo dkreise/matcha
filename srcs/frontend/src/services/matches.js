@@ -8,17 +8,7 @@ export const getRecommendations = async (axiosPrivate, limit = 1, afterId = null
     return response.data;
 };
 
-// export const getProfileData = async (axiosPrivate) => {
-//     const response = await axiosPrivate.get(
-//         '/api/profile'
-//     );
-//     return response.data; // You can structure this however you want
-// };
-
-// export const updateProfileData = async (axiosPrivate, profileData) => {
-//     const response = await axiosPrivate.post(
-//         '/api/profile/update',
-//         profileData
-//     );
-//     return response.data;
-// };
+export const getSharedTags = async (axiosPrivate, targetId) => {
+    const response = await axiosPrivate.get(`/api/matches/shared-tags/${targetId}`);
+    return response.data;
+};

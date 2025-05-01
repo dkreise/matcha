@@ -4,13 +4,14 @@ import { Button } from "./ui/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card";
 // import { Star } from "lucide-react"
 
-const SuggestedProfileCard = ({ profile }) => {
+const SuggestedProfileCard = ({ profile, match }) => {
     const avatarUrl = "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg";//"https://github.com/dkreise.png";
     const name = profile.first_name;
     const bio = profile.bio;
     const fame = profile.fame_rating;
     const gender = "female";
-    const match = 0;
+    // const match = 0;
+
     const distance = 4; // km (optional)
 
     // onLike;
