@@ -50,7 +50,7 @@ const Profile = () => {
         <div className="max-w-4xl mx-auto p-6 space-y-6">
             {/* Profile Header */}
             <div className="flex items-center space-x-4">
-                <Avatar src="https://github.com/dkreise.png" size="lg" />
+                <Avatar src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg" size="lg" />
                 <div>
                     <h1 className="text-2xl font-bold">{profile.username}</h1>
                     <p className="text-gray-500">{profile.email}</p>
@@ -67,22 +67,8 @@ const Profile = () => {
                     ))}
                 </div>
             </div>
-            {/* Profile Form */}
-            {/* <div className="space-y-4">
-                <div>
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" type="text" placeholder="Your Name" />
-                </div>
-                <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="your.email@example.com" />
-                </div>
-                <Button>Update Profile</Button>
-            </div> */}
-            <Button variant="secondary">
-                <Link to="/">Home</Link>
-            </Button>
-            <Button variant="secondary">
+
+            <Button>
                 <Link to="/profile/settings">Settings</Link>
             </Button>
             <div className="mb-4">

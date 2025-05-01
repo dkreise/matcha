@@ -6,6 +6,7 @@ const userRoutes = require('./routes/users');
 const testRoutes = require('./routes/test');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const matchesRoutes = require('./routes/matches');
 require('dotenv').config();
 const verifyJWT = require('./middleware/verifyJWT');
 
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoutes);
 app.use(verifyJWT); // Apply JWT verification middleware to all routes below this line
 app.use('/api/users', userRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/matches', matchesRoutes);
 app.use('/api/test', testRoutes);
 
 app.listen(5000, () => console.log("Server running on port 5000"));

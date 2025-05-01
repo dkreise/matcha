@@ -16,6 +16,14 @@ const User = {
       return result.rows;
     },
 
+    async getUserProfiles(id, limit) {
+      const result = await pool.query(
+        "SELECT id, first_name, bio, fame_rating FROM users WHERE id != $1 LIMIT $2",
+        [id, limit]
+      );
+      return result.rows;
+    },
+
     async getUserById(id) {
       const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
       return result.rows[0];

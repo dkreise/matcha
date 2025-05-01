@@ -12,6 +12,7 @@ module.exports = {
         "primary-foreground": "#ffffff", // White
         // secondary: '#A67B5B',      // soft brown
         background: "#f9fafb", // Gray 50
+        foreground: "#1f1f1f",
         // background: '#F5F5DC',     // beige
         accent: '#C0DFA1',         // bright matcha
         light: '#e4e8da',          // light matcha

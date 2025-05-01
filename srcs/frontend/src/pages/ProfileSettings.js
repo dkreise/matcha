@@ -97,10 +97,10 @@ const ProfileSettings = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-        <Button variant="secondary">
+        {/* <Button variant="secondary">
             <Link to="/profile">Back to Profile</Link>
         </Button>
-       <br></br><br></br>
+       <br></br><br></br> */}
       <Tabs defaultValue="personal" className="w-full">
         <TabsList className="mb-6">
           <TabsTrigger value="personal">Personal</TabsTrigger>

@@ -2,7 +2,7 @@ const pool = require('./index');
 const fs = require('fs');
 const path = require('path');
 
-async function waitForDB(retries = 10, delay = 1000) {
+async function waitForDB(retries = 20, delay = 1000) {
     while (retries > 0) {
         try {
             await pool.query('SELECT 1'); // test query
