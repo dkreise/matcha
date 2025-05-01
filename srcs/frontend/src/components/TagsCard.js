@@ -4,7 +4,7 @@ import { Input } from "./ui/Input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card";
 // import { Button } from "./ui/button";
 
-const TagsCard = ({ title = "Tags", tags, onAddTag, suggestions = [] }) => {
+const TagsCard = ({ title = "Tags", tags, onAddTag, onRemoveTag, suggestions = [] }) => {
     const [showInput, setShowInput] = useState(false);
     const [newTag, setNewTag] = useState("");
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -59,7 +59,14 @@ const TagsCard = ({ title = "Tags", tags, onAddTag, suggestions = [] }) => {
             <CardContent className="space-y-2">
             <div className="flex flex-wrap gap-2 items-start">
                 {tags.map((tag) => (
-                    <Tag key={tag.id} label={tag.name} />
+                    <div key={tag.id}>
+                        <Tag key={tag.id} label={tag.name} />
+                        <button
+                            onClick={() => onRemoveTag(tag.id)}
+                            className="mr-3 text-muted hover:text-red-500 focus:outline-none"
+                            aria-label={`Remove ${tag.name}`}
+                        > × </button>
+                    </div>
                 ))}
 
                 {showInput ? (
@@ -105,53 +112,6 @@ const TagsCard = ({ title = "Tags", tags, onAddTag, suggestions = [] }) => {
             <CardFooter className="flex justify-between">
             </CardFooter>
         </Card>
-        // <div className="p-6 bg-white rounded-xl shadow-md">
-        //     <h2 className="text-xl text-dark font-semibold mb-4">{title}</h2>
-        //     <div className="flex flex-wrap gap-2 items-start">
-        //         {tags.map((tag) => (
-        //             <Tag key={tag.id} label={tag.name} />
-        //         ))}
-
-        //         {showInput ? (
-        //             <div >
-        //                 <Input
-        //                     autoFocus
-        //                     className="w-32 h-auto inline-block bg-white text-primary text-xs font-medium mr-2 px-3 py-1 rounded-full"
-        //                     placeholder="New tag"
-        //                     value={newTag}
-        //                     onChange={(e) => setNewTag(e.target.value)}
-        //                     onBlur={() => setTimeout(() => setShowInput(false), 200)} // Delay to allow suggestion click
-        //                     onKeyDown={(e) => {
-        //                         if (e.key === "Enter") {
-        //                             e.preventDefault();
-        //                             handleAdd();
-        //                         }
-        //                     }}
-        //                 />
-        //                 {filteredSuggestions.length > 0 && (
-        //                     <ul className="absolute z-10 bg-white border mt-1 rounded shadow-md text-sm w-full">
-        //                         {filteredSuggestions.map((tag) => (
-        //                             <li
-        //                                 key={tag.id}
-        //                                 className="px-2 py-1 cursor-pointer hover:bg-gray-100"
-        //                                 onMouseDown={() => handleSelectSuggestion(tag.name)}
-        //                             >
-        //                                 {tag.name}
-        //                             </li>
-        //                         ))}
-        //                     </ul>
-        //                 )}
-        //             </div>
-        //         ) : (
-        //             <button
-        //                 onClick={() => setShowInput(true)}
-        //                 className="inline-block bg-light text-primary text-xs font-medium mr-2 px-3 py-1 rounded-full"
-        //             >
-        //                 +
-        //             </button>
-        //         )}
-        //     </div>
-        // </div>
     );
 };
 

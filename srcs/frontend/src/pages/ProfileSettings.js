@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { getProfileData, updateProfileData, getAllTags, associateTags } from '../services/profile';
+import { getProfileData, updateProfileData, getAllTags, associateTags, removeTagFromUser } from '../services/profile';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/Tabs";
 import { Button } from "../components/ui/Button";
@@ -85,6 +85,16 @@ const ProfileSettings = () => {
         setUserTags([...userTags, newTag]);
     };
 
+    const handleRemoveTag = async (id) => {
+        try {
+            await removeTagFromUser(axiosPrivate, id);
+        } catch (err) { 
+            console.error("Error removing tag:", err);
+        }
+        // Remove the tag from the local state
+        setUserTags((prevTags) => prevTags.filter((tag) => tag.id !== id));
+    };
+
     const handlePreferencesSubmit = (e) => {
         e.preventDefault()
         console.log("Preferences saved")
@@ -161,7 +171,7 @@ const ProfileSettings = () => {
         </TabsContent>
 
         <TabsContent value="interests">
-          <TagsCard title="Interests" tags={userTags} onAddTag={handleAddTag} suggestions={availableTags} />
+          <TagsCard title="Interests" tags={userTags} onAddTag={handleAddTag} onRemoveTag={handleRemoveTag} suggestions={availableTags} />
         </TabsContent>
 
         <TabsContent value="preferences">

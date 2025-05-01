@@ -36,5 +36,18 @@ const associateTags = async (req, res) => {
     }
 };
 
-module.exports = { associateTags, getAllTags };
+const removeTag = async (req, res) => {
+    const { tag_id } = req.params;
+    const user_id = req.user_id;
+
+    try {
+        await Tags.removeTagFromUser(tag_id, user_id);
+        res.status(200).json({ message: "Tag removed successfully" });
+    } catch (err) {
+        console.error("Error removing tag:", err);
+        res.status(500).json({ message: "Error removing tag" });
+    }
+};
+
+module.exports = { associateTags, getAllTags, removeTag };
   

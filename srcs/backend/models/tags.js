@@ -29,6 +29,13 @@ const Tags = {
         );
     },
 
+    async removeTagFromUser(tagId, userId) {
+        await pool.query(
+            "DELETE FROM user_tags WHERE user_id = $1 AND tag_id = $2",
+            [userId, tagId]
+        );
+    },
+
     // not needed maybe
     async getTagById(id) {
       const result = await pool.query("SELECT * FROM tags WHERE id = $1", [id]);

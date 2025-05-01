@@ -17,7 +17,7 @@ app.use(cookieParser());
 // app.use(cors()); // Allow frontend to talk to backend
 app.use(cors({
     origin: 'http://localhost:3000', // Allow the frontend origin (React app)
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
     allowedHeaders: ['Content-Type', 'Authorization'], // Make sure Authorization is allowed
 }));
