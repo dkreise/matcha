@@ -62,7 +62,7 @@ const TagsCard = ({ title = "Tags", tags, onAddTag, onRemoveTag, suggestions = [
                     <div key={tag.id}>
                         <Tag key={tag.id} label={tag.name} />
                         <button
-                            onClick={() => onRemoveTag(tag.id)}
+                            onClick={() => onRemoveTag(tag.name)}
                             className="mr-3 text-muted hover:text-red-500 focus:outline-none"
                             aria-label={`Remove ${tag.name}`}
                         > × </button>

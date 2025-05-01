@@ -28,9 +28,9 @@ export const associateTags = async (axiosPrivate, tag) => {
     return response.data;
 };
 
-export const removeTagFromUser = async (axiosPrivate, tagId) => {
+export const removeTagFromUser = async (axiosPrivate, tag) => {
     const response = await axiosPrivate.delete(
-        `/api/profile/remove-tag/${tagId}`
+        `/api/profile/remove-tag/${tag}`
     );
     return response.data;
 };

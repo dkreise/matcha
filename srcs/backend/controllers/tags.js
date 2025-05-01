@@ -29,6 +29,7 @@ const associateTags = async (req, res) => {
         }
         // Associate the tag with the user
         await Tags.associateTagWithUser(tag.id, user.id);
+        console.log(`Tag ${tag_name} associated with user ${user.username}`);
         return res.status(200).json(tag);
     } catch (err) {
         console.error("Error creating tag and associating with user:", err);
@@ -37,11 +38,27 @@ const associateTags = async (req, res) => {
 };
 
 const removeTag = async (req, res) => {
-    const { tag_id } = req.params;
+    const { tag_name } = req.params;
     const user_id = req.user_id;
+    console.log("Removing tag:", tag_name, "from user:", user_id);
 
     try {
+        let tag = await Tags.getTagByName(tag_name);
+        if (!tag) {
+            return res.status(404).json({ message: "Tag not found" });
+        }
+        const tag_id = tag.id;
         await Tags.removeTagFromUser(tag_id, user_id);
+        
+        const users = await Tags.getUsersWithTag(tag_id);
+        console.log("Users with tag:", users);
+        console.log(users.length);
+        if (!users || users.length === 0) {
+            await Tags.deleteTag(tag_id);
+            console.log(`Tag with ID ${tag_id} deleted as it is not associated with any user.`);
+        } else {
+            console.log(`Tag with ID ${tag_id} is still associated with users:`, users);
+        }
         res.status(200).json({ message: "Tag removed successfully" });
     } catch (err) {
         console.error("Error removing tag:", err);

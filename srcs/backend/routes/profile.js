@@ -14,6 +14,6 @@ router.route('/').get(getProfileData);
 router.route('/update').post(updateProfileData);
 router.route('/all-tags').get(getAllTags);
 router.route('/associate-tags').post(associateTags);
-router.route('/remove-tag/:tag_id').delete(removeTag);
+router.route('/remove-tag/:tag_name').delete(removeTag);
 
 module.exports = router;

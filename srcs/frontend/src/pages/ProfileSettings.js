@@ -85,14 +85,14 @@ const ProfileSettings = () => {
         setUserTags([...userTags, newTag]);
     };
 
-    const handleRemoveTag = async (id) => {
+    const handleRemoveTag = async (name) => {
         try {
-            await removeTagFromUser(axiosPrivate, id);
+            await removeTagFromUser(axiosPrivate, name);
         } catch (err) { 
             console.error("Error removing tag:", err);
         }
         // Remove the tag from the local state
-        setUserTags((prevTags) => prevTags.filter((tag) => tag.id !== id));
+        setUserTags((prevTags) => prevTags.filter((tag) => tag.name !== name));
     };
 
     const handlePreferencesSubmit = (e) => {

@@ -1,4 +1,5 @@
 const pool = require("../db/index");
+const { getUsers } = require("./user");
 
 const Tags = {
     async createTag(tagName) {
@@ -36,6 +37,10 @@ const Tags = {
         );
     },
 
+    async deleteTag(tagId) {
+        await pool.query("DELETE FROM tags WHERE id = $1", [tagId]);
+    },
+
     // not needed maybe
     async getTagById(id) {
       const result = await pool.query("SELECT * FROM tags WHERE id = $1", [id]);
@@ -52,19 +57,16 @@ const Tags = {
         `, [userId1, userId2]);
     
         return result.rows;
-    }
+    },
     
-
-    // TODO: the contrary function: get all users with a tag
-    // async getUserTags(userId) {
-    //     const result = await pool.query(`
-    //         SELECT t.id, t.name
-    //         FROM tags t
-    //         JOIN user_tags ut ON ut.tag_id = t.id
-    //         WHERE ut.user_id = $1
-    //       `, [userId]);
-    //     return result.rows;
-    // },
+    async getUsersWithTag(tagId) {
+        const result = await pool.query(`
+            SELECT user_id
+            FROM user_tags
+            WHERE tag_id = $1
+        `, [tagId]);
+        return result.rows;
+    }
 };
 
 module.exports = Tags;
