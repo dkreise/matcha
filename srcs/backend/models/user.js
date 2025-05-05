@@ -16,6 +16,23 @@ const User = {
       return result.rows;
     },
 
+    async getUnseenUsers(id, limit) {
+      let query = `
+          SELECT id, first_name, bio, fame_rating, gender, profile_picture, sexual_preferences
+          FROM users 
+          WHERE id != $1 
+            AND id NOT IN (SELECT target_id FROM user_actions WHERE actor_id = $1)
+          LIMIT $2
+      `;
+      // AND NOT (
+      //   type = 'skip'
+      //   AND created_at > NOW() - INTERVAL '7 days'
+      // )
+      const params = [id, limit];
+      const result = await pool.query(query, params);
+      return result.rows;
+    },
+
     async getUserProfiles(id, limit, afterId = null) {
       let query = `
           SELECT id, first_name, bio, fame_rating, gender, profile_picture, sexual_preferences
