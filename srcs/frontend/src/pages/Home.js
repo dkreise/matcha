@@ -18,7 +18,8 @@ const Home = () => {
     const fetchProfiles = async (afterId = null) => {
         setIsLoading(true)
         try {
-            const profiles = await getRecommendations(axiosPrivate, 1, afterId)
+            const limit = 5;
+            const profiles = await getRecommendations(axiosPrivate, limit, afterId)
             if (profiles.length === 0) {
                 setEndReached(true)
             } else {
@@ -35,27 +36,27 @@ const Home = () => {
         fetchProfiles()
     }, [])
 
-    // const handleAction = async (actionType) => {
-    //     if (!profiles[currentIndex]) return
+    const handleAction = async (actionType) => {
+        if (!profiles[currentIndex]) return
 
-    //     const targetId = profiles[currentIndex].user_id
-    //     try {
-    //         await axios.post(`/api/matches/${actionType}`, {
-    //             target_profile_id: targetId,
-    //         })
-    //     } catch (err) {
-    //         console.error(`Failed to ${actionType}`, err)
-    //     }
+        const targetId = profiles[currentIndex].id
+        // try {
+        //     await axios.post(`/api/matches/${actionType}`, {
+        //         target_profile_id: targetId,
+        //     })
+        // } catch (err) {
+        //     console.error(`Failed to ${actionType}`, err)
+        // }
 
-    //     const nextIndex = currentIndex + 1
-    //     setCurrentIndex(nextIndex)
+        const nextIndex = currentIndex + 1
+        setCurrentIndex(nextIndex)
 
-    //     // Fetch more if needed
-    //     if (nextIndex >= profiles.length && !endReached) {
-    //         const lastProfile = profiles[profiles.length - 1]
-    //         await fetchProfiles(lastProfile.id)
-    //     }
-    // }
+        // Fetch more if needed
+        if (nextIndex >= profiles.length && !endReached) {
+            const lastProfile = profiles[profiles.length - 1]
+            await fetchProfiles(lastProfile.id)
+        }
+    }
 
     const currentProfile = profiles[currentIndex]
 
@@ -77,10 +78,16 @@ const Home = () => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-8 p-8">
-            <h1 className="text-2xl">Suggested profiles for you:</h1>
+            <h1 className="text-2xl text-primary">Profiles you may be interested in:</h1>
             {isLoading && profiles.length === 0 && <p>Loading profiles...</p>}
             {!currentProfile && !isLoading && <p>No more matches right now 😢</p>}
-            {currentProfile && <SuggestedProfileCard profile={currentProfile} match={sharedTagsCount}/>}
+            {currentProfile && 
+                <SuggestedProfileCard 
+                    profile={currentProfile} 
+                    match={sharedTagsCount}
+                    onLike={() => handleAction('like')} 
+                    onSkip={() => handleAction('skip')} 
+                />}
             <br></br>
             <LogoutButton />
         </div>

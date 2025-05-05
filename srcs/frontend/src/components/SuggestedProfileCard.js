@@ -4,7 +4,7 @@ import { Button } from "./ui/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card";
 // import { Star } from "lucide-react"
 
-const SuggestedProfileCard = ({ profile, match }) => {
+const SuggestedProfileCard = ({ profile, match, onLike, onSkip }) => {
     const avatarUrl = "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg";//"https://github.com/dkreise.png";
     const name = profile.first_name;
     const bio = profile.bio;
@@ -51,8 +51,8 @@ const SuggestedProfileCard = ({ profile, match }) => {
             </CardContent>
     
             <CardFooter className="flex justify-around pb-6 pt-0">
-                <Button variant="secondary">Skip</Button>
-                <Button >I'm interested</Button>
+                <Button variant="secondary" onClick={onSkip}>Skip</Button>
+                <Button onClick={onLike}>I'm interested</Button>
             </CardFooter>
         </Card>
     )

@@ -7,7 +7,7 @@ const getRecommendations = async (req, res) => {
     const afterId = req.query.after; // optional, for pagination
 
     try {
-        const profiles = await User.getUserProfiles(user_id, limit);
+        const profiles = await User.getUserProfiles(user_id, limit, afterId);
         // if (!profiles)
         //     return res.status(404).json({ message: 'No profiles found' });
 

@@ -16,11 +16,25 @@ const User = {
       return result.rows;
     },
 
-    async getUserProfiles(id, limit) {
-      const result = await pool.query(
-        "SELECT id, first_name, bio, fame_rating FROM users WHERE id != $1 LIMIT $2",
-        [id, limit]
-      );
+    async getUserProfiles(id, limit, afterId = null) {
+      let query = `
+          SELECT id, first_name, bio, fame_rating 
+          FROM users 
+          WHERE id != $1 
+          ${afterId ? `AND id > $2` : ''} 
+          ORDER BY id 
+          LIMIT $${afterId ? 3 : 2}
+      `;
+      const params = afterId ? [id, afterId, limit] : [id, limit];
+      const result = await pool.query(query, params);
+      // const result = await pool.query(`
+      //     SELECT id, first_name, bio, fame_rating 
+      //     FROM users 
+      //     WHERE id != $1 
+      //     LIMIT $2
+      //   `,
+      //   [id, limit]
+      // );
       return result.rows;
     },
 
