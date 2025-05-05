@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const UserActions = require("../models/user_actions");
 
 const getProfileData = async (req, res) => {
     const user_id = req.user_id;
@@ -38,7 +39,23 @@ const updateProfileData = async (req, res) => {
     }
 };
 
+const resetSkippedProfiles = async (req, res) => {
+    const user_id = req.user_id;
+
+    try {
+        const user = await User.getUserById(Number(user_id));
+        if (!user)
+            return res.status(404).json({ message: 'User not found' });
+
+        await UserActions.deleteSkips(user.id);
+        res.status(200).json({ message: 'Skipped profiles reset successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 module.exports = {
     getProfileData,
     updateProfileData,
+    resetSkippedProfiles,
 };

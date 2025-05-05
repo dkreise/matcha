@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { getProfileData, updateProfileData, getAllTags, associateTags, removeTagFromUser } from '../services/profile';
+import { getProfileData, updateProfileData, resetSkippedProfiles, getAllTags, associateTags, removeTagFromUser } from '../services/profile';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/Tabs";
 import { Button } from "../components/ui/Button";
@@ -100,6 +100,16 @@ const ProfileSettings = () => {
         console.log("Preferences saved")
     }
 
+    const handleResetSkippedProfiles = async (e) => {
+        try {
+            await resetSkippedProfiles(axiosPrivate);
+            alert("Skipped profiles reset successfully");
+        } catch (err) {
+            console.error("Error resetting skipped profiles:", err);
+            // alert("Error resetting skipped profiles");
+        }
+    }
+
     const handleNotificationsSubmit = (e) => {
         e.preventDefault()
         console.log("Notifications settings saved")
@@ -183,7 +193,7 @@ const ProfileSettings = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              
+              <Button variant="secondary" onClick={handleResetSkippedProfiles}>Reset Skipped Profiles</Button>
             </CardContent>
             <CardFooter>
               <Button onClick={handlePreferencesSubmit}>Save Preferences</Button>

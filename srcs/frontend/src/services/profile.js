@@ -13,6 +13,13 @@ export const updateProfileData = async (axiosPrivate, profileData) => {
     return response.data;
 };
 
+export const resetSkippedProfiles = async (axiosPrivate) => {
+    const response = await axiosPrivate.post(
+        '/api/profile/reset-skipped-profiles'
+    );
+    return response.data;
+};
+
 export const getAllTags = async (axiosPrivate) => {
     const response = await axiosPrivate.get(
         '/api/profile/all-tags'

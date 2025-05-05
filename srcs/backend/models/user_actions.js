@@ -32,6 +32,14 @@ const UserActions = {
         );
         return result.rows[0];
     },
+
+    async deleteSkips(actorId) {
+        const result = await pool.query(
+            "DELETE FROM user_actions WHERE actor_id = $1 AND action_type = 'skip' RETURNING *",
+            [actorId]
+        );
+        return result.rows;
+    },
 };
 
 module.exports = UserActions;
