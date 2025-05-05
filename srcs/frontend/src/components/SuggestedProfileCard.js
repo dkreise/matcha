@@ -5,11 +5,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // import { Star } from "lucide-react"
 
 const SuggestedProfileCard = ({ profile, match, onLike, onSkip }) => {
-    const avatarUrl = "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg";//"https://github.com/dkreise.png";
+    const avatarUrl = profile.profile_picture || "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg";//"https://github.com/dkreise.png";
     const name = profile.first_name;
     const bio = profile.bio;
     const fame = profile.fame_rating;
-    const gender = "female";
+    const gender = profile.gender || "unknown gender";
     // const match = 0;
 
     const distance = 4; // km (optional)

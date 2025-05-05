@@ -18,7 +18,7 @@ const User = {
 
     async getUserProfiles(id, limit, afterId = null) {
       let query = `
-          SELECT id, first_name, bio, fame_rating 
+          SELECT id, first_name, bio, fame_rating, gender, profile_picture, sexual_preferences
           FROM users 
           WHERE id != $1 
           ${afterId ? `AND id > $2` : ''} 

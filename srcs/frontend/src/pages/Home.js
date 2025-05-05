@@ -5,7 +5,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import LogoutButton from '../components/LogoutButton';
 import { Button } from "../components/ui/Button"
 import SuggestedProfileCard from '../components/SuggestedProfileCard';
-import { getRecommendations, getSharedTags } from '../services/matches';
+import { getRecommendations, getSharedTags, makeAction } from '../services/matches';
 
 const Home = () => {
     const { accessToken } = useAuth();
@@ -40,13 +40,11 @@ const Home = () => {
         if (!profiles[currentIndex]) return
 
         const targetId = profiles[currentIndex].id
-        // try {
-        //     await axios.post(`/api/matches/${actionType}`, {
-        //         target_profile_id: targetId,
-        //     })
-        // } catch (err) {
-        //     console.error(`Failed to ${actionType}`, err)
-        // }
+        try {
+            await makeAction(axiosPrivate, actionType, targetId)
+        } catch (err) {
+            console.error(`Failed to ${actionType}`, err)
+        }
 
         const nextIndex = currentIndex + 1
         setCurrentIndex(nextIndex)
