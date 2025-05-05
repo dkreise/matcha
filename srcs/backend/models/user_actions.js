@@ -24,6 +24,22 @@ const UserActions = {
         );
         return result.rows[0];
     },
+    
+    async getActionsByActorId(actorId, actionType) {
+        const result = await pool.query(
+            "SELECT * FROM user_actions WHERE actor_id = $1 AND action_type = $2",
+            [actorId, actionType]
+        );
+        return result.rows;
+    },
+
+    async getLikesByTargetId(targetId) {
+        const result = await pool.query(
+            "SELECT * FROM user_actions WHERE target_id = $1 AND action_type = 'like'",
+            [targetId]
+        );
+        return result.rows;
+    },
 
     async deleteLike(actorId, targetId) {
         const result = await pool.query(
