@@ -19,6 +19,8 @@ module.exports = {
         dark: '#48562B',           // dark matcha
         // dark: '#4A403A',           // deep brown
         destructive: '#ef4444',     // Red
+        "like-light": '#f3e8ee',      // light pink
+        "like-dark": '#aa5982',       // dark pink
         "destructive-foreground": "#ffffff", // White
         // etc.
       },

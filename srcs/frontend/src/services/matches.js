@@ -8,8 +8,8 @@ export const getRecommendations = async (axiosPrivate, limit = 1, afterId = null
     return response.data;
 };
 
-export const getSharedTags = async (axiosPrivate, targetId) => {
-    const response = await axiosPrivate.get(`/api/matches/shared-tags/${targetId}`);
+export const getAdditionalProfileInfo = async (axiosPrivate, targetId) => {
+    const response = await axiosPrivate.get(`/api/matches/additional-info/${targetId}`);
     return response.data;
 };
 

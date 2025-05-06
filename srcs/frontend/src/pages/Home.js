@@ -5,7 +5,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import LogoutButton from '../components/LogoutButton';
 import { Button } from "../components/ui/Button"
 import SuggestedProfileCard from '../components/SuggestedProfileCard';
-import { getRecommendations, getSharedTags, makeAction } from '../services/matches';
+import { getRecommendations, getAdditionalProfileInfo, makeAction } from '../services/matches';
 
 const Home = () => {
     const { accessToken } = useAuth();
@@ -59,19 +59,23 @@ const Home = () => {
     const currentProfile = profiles[currentIndex]
 
     const [sharedTagsCount, setSharedTagsCount] = useState(0)
+    const [isLiked, setIsLiked] = useState(false)
 
     useEffect(() => {
-        const fetchSharedTags = async () => {
+        const fetchAdditionalInfo = async () => {
             if (!currentProfile) return
             try {
-                const sharedTags = await getSharedTags(axiosPrivate, currentProfile.id)
+                const data = await getAdditionalProfileInfo(axiosPrivate, currentProfile.id)
+                const sharedTags = data.shared_tags
                 setSharedTagsCount(sharedTags.length) // assuming it's an array of tags
+                setIsLiked(data.like)
             } catch (err) {
                 console.error("Error fetching shared tags:", err)
                 setSharedTagsCount(0)
+                setIsLiked(false)
             }
         }
-        fetchSharedTags()
+        fetchAdditionalInfo()
     }, [currentProfile])
 
     return (
@@ -82,7 +86,8 @@ const Home = () => {
             {currentProfile && 
                 <SuggestedProfileCard 
                     profile={currentProfile} 
-                    match={sharedTagsCount}
+                    sharedTagsCount={sharedTagsCount}
+                    isLiked={isLiked}
                     onLike={() => handleAction('like')} 
                     onSkip={() => handleAction('skip')} 
                 />}

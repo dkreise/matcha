@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Tags = require("../models/tags");
+const UserActions = require("../models/user_actions");
 
 const getRecommendations = async (req, res) => {
     const user_id = req.user_id;
@@ -16,13 +17,19 @@ const getRecommendations = async (req, res) => {
     }
 };
 
-const getSharedTags = async (req, res) => {
+const getAdditionalProfileInfo = async (req, res) => {
     const user_id = req.user_id;
     const target_id = req.params.target_id;
 
     try {
         const tags = await Tags.getSharedTags(user_id, target_id);
-        res.json(tags);
+        const like = await UserActions.likeExists(target_id, user_id);
+        console.log("like: ", like);
+        
+        res.json({
+            shared_tags: tags,
+            like: like,
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -30,5 +37,5 @@ const getSharedTags = async (req, res) => {
 
 module.exports = {
     getRecommendations,
-    getSharedTags,
+    getAdditionalProfileInfo,
 };

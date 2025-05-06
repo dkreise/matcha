@@ -41,6 +41,14 @@ const UserActions = {
         return result.rows;
     },
 
+    async likeExists(actorId, targetId) {
+        const result = await pool.query(
+            "SELECT * FROM user_actions WHERE actor_id = $1 AND target_id = $2 AND action_type = 'like'",
+            [actorId, targetId]
+        );
+        return result.rows.length > 0;
+    },
+
     async deleteLike(actorId, targetId) {
         const result = await pool.query(
             "DELETE FROM user_actions WHERE actor_id = $1 AND target_id = $2 AND action_type = 'like' RETURNING *",

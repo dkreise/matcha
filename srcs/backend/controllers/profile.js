@@ -9,6 +9,7 @@ const getProfileData = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         
         const tags = await User.getUserTags(user.id);
+        
         res.json({
             id: user.id,
             username: user.username,

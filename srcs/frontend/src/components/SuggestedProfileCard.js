@@ -4,17 +4,13 @@ import { Button } from "./ui/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card";
 // import { Star } from "lucide-react"
 
-const SuggestedProfileCard = ({ profile, match, onLike, onSkip }) => {
+const SuggestedProfileCard = ({ profile, sharedTagsCount, isLiked, onLike, onSkip }) => {
     const avatarUrl = profile.profile_picture || "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg";//"https://github.com/dkreise.png";
     const name = profile.first_name;
     const bio = profile.bio;
     const fame = profile.fame_rating;
     const gender = profile.gender || "unknown gender";
-    // const match = 0;
-
     const distance = 4; // km (optional)
-
-    // onLike;
 
     return (
         <Card className="w-full max-w-sm rounded-2xl shadow-lg">
@@ -40,13 +36,16 @@ const SuggestedProfileCard = ({ profile, match, onLike, onSkip }) => {
                         <span className="font-medium text-dark">{gender}</span>
                     </div>
                     <div className="text-center">
-                        <span className="font-medium text-dark">matched interests: {match}</span>
+                        <span className="font-medium text-dark">matched interests: {sharedTagsCount}</span>
                     </div>
                     <div className="text-center">
                         <span className="font-medium text-dark">{distance} km away</span>
                     </div>
                 </div>
             </div>
+            {isLiked && <div className="bg-like-light text-sm rounded-md px-2 py-1 mt-2 inline-block w-fit">
+                <span className="font-sm font-bold text-like-dark">Interested in you &lt;3</span>
+                </div>}
 
             </CardContent>
     

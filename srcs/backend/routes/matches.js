@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const {
     getRecommendations,
-    getSharedTags,
+    getAdditionalProfileInfo,
 } = require('../controllers/recommendations');
 const { makeAction } = require('../controllers/matches');
 
 router.route('/recommendations').get(getRecommendations);
-router.route('/shared-tags/:target_id').get(getSharedTags);
+router.route('/additional-info/:target_id').get(getAdditionalProfileInfo);
 router.route('/:action_type/:target_id').post(makeAction);
 
 module.exports = router;
