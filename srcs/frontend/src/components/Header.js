@@ -26,6 +26,14 @@ export default function Header() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
+            <NavigationMenuLink asChild>  
+              <Link to="/activity" className="text-gray-700 hover:text-primary">
+                Activity
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link to="/profile" className="text-gray-700 hover:text-primary">
                 Profile

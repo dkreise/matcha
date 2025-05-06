@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import SignUp from './pages/SignUp';
 import Profile from "./pages/Profile";
 import ProfileSettings from './pages/ProfileSettings';
+import Activity from './pages/Activity';
 import NoPage from "./pages/NoPage";
 import Layout from './components/Layout';
 import axios from 'axios';
@@ -30,6 +31,7 @@ const App = () => (
                     <Route path="/" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/settings" element={<ProfileSettings />} />
+                    <Route path="/activity" element={<Activity />} />
                 </Route>
                 {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
