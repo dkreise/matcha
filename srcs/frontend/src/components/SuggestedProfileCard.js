@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Avatar } from "./ui/Avatar";
 import { Button } from "./ui/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card";
-// import { Star } from "lucide-react"
+import MatchSpan from "./MatchSpan";
 
 const SuggestedProfileCard = ({ profile, sharedTagsCount, isLiked, onLike, onSkip }) => {
     const avatarUrl = profile.profile_picture || "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1906669723.jpg";//"https://github.com/dkreise.png";
@@ -43,10 +43,10 @@ const SuggestedProfileCard = ({ profile, sharedTagsCount, isLiked, onLike, onSki
                     </div>
                 </div>
             </div>
-            {isLiked && <div className="bg-like-light text-sm rounded-md px-2 py-1 mt-2 inline-block w-fit">
+            {/* {isLiked && <div className="bg-like-light text-sm rounded-md px-2 py-1 mt-2 inline-block w-fit">
                 <span className="font-sm font-bold text-like-dark">Interested in you &lt;3</span>
-                </div>}
-
+                </div>} */}
+            {isLiked && (<div><MatchSpan text="Interested in you &lt;3" /></div>)}
             </CardContent>
     
             <CardFooter className="flex justify-around pb-6 pt-0">

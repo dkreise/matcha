@@ -17,3 +17,13 @@ export const makeAction = async (axiosPrivate, actionType, targetId) => {
     const response = await axiosPrivate.post(`/api/matches/${actionType}/${targetId}`);
     return response.data;
 };
+
+export const getUserActivity = async (axiosPrivate) => {
+    const response = await axiosPrivate.get('/api/matches/activity');
+    return response.data;
+}
+
+export const getInterestedUsers = async (axiosPrivate) => {
+    const response = await axiosPrivate.get('/api/matches/interested-users');
+    return response.data;
+};

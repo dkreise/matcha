@@ -24,36 +24,30 @@ const makeAction = async (req, res) => {
     }
 };
 
-// const getRecommendations = async (req, res) => {
-//     const user_id = req.user_id;
-//     const limit = parseInt(req.query.limit) || 1;
-//     const afterId = req.query.after; // optional, for pagination
+const getInterestedUsers = async (req, res) => {
+    const user_id = req.user_id;
 
-//     try {
-//         const profiles = await User.getUserProfiles(user_id, limit, afterId);
-//         // if (!profiles)
-//         //     return res.status(404).json({ message: 'No profiles found' });
+    try {
+        const interestedUsers = await UserActions.getLikesByTargetId(user_id);
+        res.json(interestedUsers);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
-//         // Filter out profiles that the user has already liked
+const getUserActivity = async (req, res) => {
+    const user_id = req.user_id;
 
-//         res.json(profiles);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
-
-// const getSharedTags = async (req, res) => {
-//     const user_id = req.user_id;
-//     const target_id = req.params.target_id;
-
-//     try {
-//         const tags = await Tags.getSharedTags(user_id, target_id);
-//         res.json(tags);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
+    try {
+        const activity = await UserActions.getAllActionsByActorId(user_id);
+        res.json(activity);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
 module.exports = {
     makeAction,
+    getInterestedUsers,
+    getUserActivity,
 };
